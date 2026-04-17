@@ -376,8 +376,7 @@ export default function BabyShowerRSVP() {
 
             {/* Guest Count */}
             <div className="form-card reveal reveal-delay-1">
-              <p className="form-card-title">Party Size</p>
-              <p className="form-card-subtitle">How many people will be attending?</p>
+              <p className="form-card-title">How many people will be attending?</p>
               <div className="field-group" style={{ marginBottom: 0 }}>
                 <select
                   className="field-input"
