@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 export default function BabyShowerRSVP() {
   /* ── refs ── */
   const canvasRef = useRef(null);
+  const audioRef = useRef(null);
 
   /* ── state ── */
   const [showGate, setShowGate] = useState(true);
@@ -25,6 +26,10 @@ export default function BabyShowerRSVP() {
   /* ── Enter site ── */
   const enterSite = useCallback(() => {
     setGateFading(true);
+    /* Start background music on user interaction */
+    if (audioRef.current) {
+      audioRef.current.play().catch(() => { });
+    }
     setTimeout(() => {
       setShowGate(false);
       setEntered(true);
@@ -98,7 +103,7 @@ export default function BabyShowerRSVP() {
 
   /* ── Countdown ── */
   useEffect(() => {
-    const target = new Date('May 30, 2026 17:00:00 GMT-0400');
+    const target = new Date('May 30, 2026 16:00:00 GMT-0400');
     const fmt = n => String(n).padStart(2, '0');
 
     function tick() {
@@ -180,6 +185,11 @@ export default function BabyShowerRSVP() {
   ═══════════════════════════════════════════════════════════ */
   return (
     <>
+      {/* Background Music */}
+      <audio ref={audioRef} loop preload="auto">
+        <source src="/main.mp3" type="audio/mpeg" />
+      </audio>
+
       {/* Petals */}
       <canvas ref={canvasRef} className={`petals-canvas${entered ? ' active' : ''}`} />
 
@@ -187,14 +197,24 @@ export default function BabyShowerRSVP() {
       {showGate && (
         <div className={`entry-gate${gateFading ? ' fade-out' : ''}`} onClick={enterSite}>
           <div className="gate-content">
-            <div className="gate-icon">
-              <span>🌙</span><span>⭐</span><span>🧸</span>
+            <div className="gate-icon" style={{ marginTop: '-40px', marginBottom: '-90px', display: 'flex', justifyContent: 'center' }}>
+              <img 
+                src="/Greenery Safari Baby Shower Invitation.svg" 
+                alt="Baby Safari" 
+                style={{ 
+                  height: '320px', 
+                  width: 'auto', 
+                  mixBlendMode: 'multiply',
+                  opacity: 0.95,
+                  objectFit: 'contain'
+                }} 
+              />
             </div>
             <p className="gate-label">You are cordially invited to</p>
             <h1 className="gate-title">Sonal&apos;s</h1>
             <h2 className="gate-subtitle">Baby Shower</h2>
             <div className="gate-divider" />
-            <p className="gate-date">Saturday, May 30, 2026</p>
+            <p className="gate-date">Saturday · 30th May 2026</p>
             <p className="gate-cta">Tap to Open</p>
           </div>
         </div>
@@ -213,8 +233,20 @@ export default function BabyShowerRSVP() {
             <div className="card-corner bl" />
             <div className="card-corner br" />
 
-            <div className="hero-emoji">
-              <span>🌙</span><span>⭐</span><span>🧸</span>
+            <div className="hero-emoji" style={{ marginTop: '0', display: 'flex', justifyContent: 'center' }}>
+              {/* Using CSS multiply to remove white background seamlessly */}
+              <img
+                src="/gurus.png"
+                alt="Divine Blessings"
+                style={{
+                  height: 'auto',
+                  maxHeight: '160px',
+                  maxWidth: '95%',
+                  mixBlendMode: 'multiply',
+                  opacity: 0.95,
+                  objectFit: 'contain'
+                }}
+              />
             </div>
 
             <p className="blessings-text">
@@ -236,16 +268,15 @@ export default function BabyShowerRSVP() {
               we warmly invite you to the baby shower
             </p>
 
-            <div className="date-display">
-              <span className="date-num">30</span>
-              <span className="date-divider-v" />
-              <span className="date-month">MAY</span>
-              <span className="date-divider-v" />
-              <span className="date-num">26</span>
+            <div className="date-display" style={{ display: 'flex', gap: '0.6rem', alignItems: 'baseline', flexWrap: 'wrap', justifyContent: 'center' }}>
+              <span className="date-num" style={{ fontSize: '2.5rem' }}>30th</span>
+              <span className="date-month" style={{ fontSize: '2.5rem', textTransform: 'none' }}>May</span>
+              <span className="date-num" style={{ fontSize: '2.5rem' }}>,</span>
+              <span className="date-num" style={{ fontSize: '2.5rem' }}>2026</span>
             </div>
 
-            <p className="hero-day">Saturday · 5 o&apos;clock in the afternoon</p>
-            <p className="hero-venue-line">1075 Ypres Ave, Windsor, ON</p>
+            <p className="hero-day" style={{ fontSize: '1.2rem', marginTop: '1.2rem' }}>Saturday · 4 PM onwards</p>
+            <p className="hero-venue-line" style={{ fontSize: '1.15rem' }}>1075 Ypres Ave, Windsor, ON</p>
           </div>
 
           <div className="scroll-cue">
@@ -263,7 +294,7 @@ export default function BabyShowerRSVP() {
             <p className="countdown-quote">
               A precious little star is on its way to light up our world
             </p>
-            <p className="countdown-date">Saturday · 30th May 2026</p>
+            <p className="countdown-date">Saturday · 30th May 2026 · 4 PM onwards</p>
 
             <div className="countdown-grid">
               {[
@@ -460,7 +491,7 @@ export default function BabyShowerRSVP() {
               <div className="footer-divider-line" />
             </div>
             <p className="footer-info">
-              May 30, 2026 · 1075 Ypres Ave, Windsor, ON
+              30th May 2026 · 4 PM onwards · 1075 Ypres Ave, Windsor, ON
             </p>
           </div>
         </section>
